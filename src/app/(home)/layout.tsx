@@ -3,7 +3,6 @@ import { Poppins } from "next/font/google";
 import "../globals.css";
 import Navbar from "@/components/general/navbar/Navbar";
 import Footer from "@/components/general/Footer";
-import SignInModal from "@/components/modals/SignInModal";
 import SearchModal from "@/components/modals/SearchModal";
 import { Toaster } from "react-hot-toast";
 import QueryProvider from "@/providers/QueryProvider";
@@ -33,7 +32,6 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
-          <SignInModal />
           <SearchModal />
           <Toaster />
         </QueryProvider>
