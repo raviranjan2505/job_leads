@@ -2,10 +2,10 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import { useModalStore } from "@/store/useModalStore";
-import { useDebounce } from "@/custom-hooks/usePost";
+import { useDebounce } from "@/custom-hooks/useJobs";
 import { useQuery } from "@tanstack/react-query";
-import { searchPosts } from "@/services/post";
-import { Post } from "@/types/post";
+import { searchJobs } from "@/services/jobs";
+import { SearchJobsResponse } from "@/types/jobs";
 import { useRouter } from "next/navigation";
 
 
@@ -20,24 +20,24 @@ export default function SearchModal() {
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ["search-posts", debouncedQuery],
-    queryFn: () => searchPosts(debouncedQuery),
+    queryKey: ["search-jobs", debouncedQuery],
+    queryFn: () => searchJobs({ q: debouncedQuery, limit: 8 }),
     enabled: debouncedQuery.length > 1, //prevent useless requests
   });
 
   const handleNavigate = (slug: string) => {
-    router.push(`/articles/${slug}`);
+    router.push(`/jobs/${slug}`);
     closeSearch();
     setQuery("");
   };
   return (
     <Modal onClose={closeSearch} isOpen={isSearchOpen}>
       <div className="space-y-4">
-        <input
+          <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           type="text"
-          placeholder="Search articles"
+          placeholder="Search jobs"
           autoFocus
           className="w-full p-4 rounded-xl bg-black/40 border border-white/10 text-white text-lg outline-none focus:border-indigo-500"
         />
@@ -54,7 +54,7 @@ export default function SearchModal() {
               No results found!
             </div>
           )}
-          {results.map((result: Post) => {
+          {results.map((result) => {
             return (
               <button
                 onClick={() => handleNavigate(result.slug)}
