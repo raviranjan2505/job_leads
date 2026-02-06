@@ -3,9 +3,11 @@ import axios from "axios";
 export async function adminLoginAction(email: string, password: string) {
   try {
     const res = await axios.post("/api/signIn", {
-      email,
-      password,
-    });
+  email,
+  password,
+}, {
+  withCredentials: true
+});
 
     return res.data;
   } catch (error: any) {
