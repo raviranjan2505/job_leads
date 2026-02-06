@@ -47,11 +47,13 @@ export async function POST(req: Request) {
     });
 
     response.cookies.set("admin_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-    });
+  httpOnly: true,
+  secure: true,
+  sameSite: "lax",
+  path: "/",
+  maxAge: 60 * 60 * 24 * 7,
+});
+
 
     return response;
   } catch (error) {
